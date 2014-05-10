@@ -19,7 +19,7 @@ int main()
 {
 	string inp;
 	start:
-	cout << "Please enter a string that has between 1-4 letters.\n";
+	cout << "Please enter a string that has between 1-10 letters.\n";
 	cin >> inp;
 	int len = inp.length();
 	if(len > 11)
