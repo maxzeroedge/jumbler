@@ -14,6 +14,7 @@ using namespace std;
 void swapper(string, int);
 bool checkWordExists(string, string);
 bool checkStringInString(string, string);
+string file_contents = "";
 
 int main()
 {
@@ -34,25 +35,6 @@ int main()
     {
         swapper(inp, i);
     }
-	/*for(int i = 0; i < len; i++)
-	{
-		for(int j = i; j < len; j++)
-		{
-			string temp1 = inp;
-			temp1.at(j) = inp.at(i);
-			temp1.at(i) = inp.at(j);
-			cout << counter<<")	" << "n= " << i << " m= " << j << temp1 <<endl;counter++;
-			for(int k = len; k > len-j; k--)
-			{
-				string temp2 = temp1;
-				temp2.at(j+k-len) = temp1.at(len-j);
-				temp2.at(len-j) = temp1.at(j+k-len);
-				cout << counter<<")	" << temp2 <<endl;counter++;
-			}
-		}
-	}*/
-	//cout << counter<<")	" <<inp <<endl;
-	//system("pause");
 	return 0;
 }
 
@@ -68,7 +50,7 @@ void swapper(string inp, int pos)
 			temp1.at(i) = inp.at(j);
 			if(!checkWordExists("words.txt", temp1))
 			{
-				cout << temp1 <<endl;
+				cout << temp1 << endl;
 			}
 			else
             {
@@ -81,35 +63,34 @@ void swapper(string inp, int pos)
 
 bool checkWordExists(string fName, string word)
 {
-	ifstream read(fName.c_str());
-	if(!read.is_open())
-	{
-		cout << "Error opening file to read";
-	}
-	string file_contents, line;
-	while(getline(read, line))
-	{
-		file_contents += line;
-	}
-	read.close();
-	word = "_"+word+"_";
 	//If file_contents has word, return true, else add the word to file and return false
 	if(file_contents == ""){goto startWrite;}
-	//checkStringInString(file_contents, word)
-	if(file_contents.find(word) != std::string::npos)
+	if(file_contents.find(word+"\n") != std::string::npos)
 	{
 		return true;
 	}
 	else
-	{
+    {
+        ifstream read(fName.c_str());
+        if(!read.is_open())
+        {
+            cout << "Error opening file to read";
+        }
 		ofstream write(fName.c_str());
-		write << file_contents+"\n"+word+"\n";
+        file_contents += word + "\n";
+		write << file_contents;
 		write.close();
 		return false;
 	}
 	startWrite:
+    ifstream read(fName.c_str());
+    if(!read.is_open())
+    {
+        cout << "Error opening file to read";
+    }
     ofstream write(fName.c_str());
-	write << word+"\n";
+    file_contents += word + "\n";
+	write << word + "\n";
 	write.close();
 	return false;
 }
