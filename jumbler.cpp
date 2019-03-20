@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
+#include <chrono>
+#include <ctime>  
 
 using namespace std;
 
@@ -28,6 +30,7 @@ int main()
 		cout<<"Too many letters"<<endl;
 		goto start;
 	}
+    auto start = std::chrono::system_clock::now();
 	std::ofstream ofs;
     ofs.open("words.txt", std::ofstream::out | std::ofstream::trunc);
     ofs.close();
@@ -35,6 +38,13 @@ int main()
     {
         swapper(inp, i);
     }
+    // Some computation here
+    auto end = std::chrono::system_clock::now();
+
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+    std::cout << "Time taken (in seconds): " << elapsed_seconds.count() << endl;
 	return 0;
 }
 
